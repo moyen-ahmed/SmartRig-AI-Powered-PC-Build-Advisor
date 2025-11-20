@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Checker - SmartRig</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00e5ff;
+            --neon-green: #00ff99;
+            --neon-red: #ff0055;
+            --neon-yellow: #ffdd00;
+            --dark-bg: #0a0a0f;
+            --dark-card: #1a1a2e;
+            --dark-hover: #25253f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --glass-bg: rgba(26, 26, 46, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+       /* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;  /* logo --- links --- dashboard */
+    align-items: center;
+}
+:root {
+    --neon-cyan: #00e5ff;
+    --neon-green: #00ff99;
+}
+
+/* Logo container */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Icon wrapper */
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+/* SVG sizing */
+.logo-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* SmartRig text */
+.logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Float animation */
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--neon-cyan);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--neon-cyan);
+    transition: width 0.3s;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-cta {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+    border: none;
+    padding: 0.7rem 1.6rem;
+    border-radius: 8px;
+    color: var(--dark-bg);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 229, 255, 0.4);
+}
+
+
+        /* Main Container */
+        .compatibility-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Selection Grid */
+        .selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Selection Card */
+        .selection-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .card-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Custom Select */
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-button {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--dark-card);
+            border: 2px solid rgba(0, 229, 255, 0.3);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .select-button:hover {
+            border-color: var(--neon-cyan);
+            background: var(--dark-hover);
+        }
+
+        .select-arrow {
+            transition: transform 0.3s;
+        }
+
+        .custom-select.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            width: 100%;
+            background: var(--dark-card);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .custom-select.active .select-dropdown {
+            display: block;
+            animation: fadeInDown 0.3s;
+        }
+
+        .select-option {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        .select-option:hover {
+            background: var(--dark-hover);
+        }
+
+        .select-option:last-child {
+            border-bottom: none;
+        }
+
+        .option-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .option-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Selected Component Display */
+        .selected-component {
+            display: none;
+            padding: 1.5rem;
+            background: var(--dark-card);
+            border-radius: 12px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--neon-cyan);
+        }
+
+        .selected-component.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .component-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .component-image {
+            width: 80px;
+            height: 80px;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .component-details h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .component-specs {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Compatibility Results */
+        .compatibility-results {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 229, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            display: none;
+        }
+
+        .compatibility-results.show {
+            display: block;
+            animation: slideUp 0.5s;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .overall-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .overall-status.compatible {
+            background: rgba(0, 255, 153, 0.2);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .overall-status.warning {
+            background: rgba(255, 221, 0, 0.2);
+            border: 2px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+        }
+
+        .overall-status.incompatible {
+            background: rgba(255, 0, 85, 0.2);
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        /* Compatibility Checks */
+        .compatibility-checks {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--dark-card);
+            border-radius: 12px;
+            border-left: 4px solid;
+            transition: all 0.3s;
+        }
+
+        .check-item:hover {
+            transform: translateX(10px);
+        }
+
+        .check-item.pass {
+            border-color: var(--neon-green);
+        }
+
+        .check-item.warning {
+            border-color: var(--neon-yellow);
+        }
+
+        .check-item.fail {
+            border-color: var(--neon-red);
+        }
+
+        .check-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .check-item.pass .check-icon {
+            background: rgba(0, 255, 153, 0.2);
+            color: var(--neon-green);
+        }
+
+        .check-item.warning .check-icon {
+            background: rgba(255, 221, 0, 0.2);
+            color: var(--neon-yellow);
+        }
+
+        .check-item.fail .check-icon {
+            background: rgba(255, 0, 85, 0.2);
+            color: var(--neon-red);
+        }
+
+        .check-content {
+            flex: 1;
+        }
+
+        .check-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .check-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .check-details {
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(0, 229, 255, 0.05);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Power Requirements Section */
+        .power-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--dark-card);
+            border-radius: 16px;
+        }
+
+        .power-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .power-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .power-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--neon-cyan);
+        }
+
+        .power-bar-container {
+            position: relative;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .power-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-yellow), var(--neon-red));
+            border-radius: 20px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+            color: var(--dark-bg);
+            font-weight: 700;
+        }
+
+        .power-recommendation {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(0, 229, 255, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid var(--neon-cyan);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            color: var(--dark-bg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .selection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+   <nav class="navbar">
+    <div class="nav-container">
+       <!-- Logo: SmartRig -->
+<div class="logo-section">
+    <div class="logo-icon">
+        <svg viewBox="0 0 40 40" class="logo-svg">
+            <path d="M20 5 L35 12 L35 28 L20 35 L5 28 L5 12 Z"
+                  fill="none"
+                  stroke="url(#neonGradient)"
+                  stroke-width="2" />
+            <circle cx="20" cy="20" r="6" fill="url(#neonGradient)"/>
+            <defs>
+                <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#00e5ff"/>
+                    <stop offset="100%" style="stop-color:#00ff99"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    <span class="logo-text">SmartRig</span>
+</div>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="components.html" class="nav-link ">Components</a>
+            <a href="compatibility.html" class="nav-link active">Compatibility</a>
+        </div>
+
+        <button class="nav-cta">Dashboard</button>
+    </div>
+</nav>
+
+
+    <!-- Main Container -->
+    <div class="compatibility-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title"><span class="gradient-text">Compatibility</span> Checker</h1>
+            <p class="page-subtitle">Verify your PC components work together perfectly</p>
+        </div>
+
+        <!-- Selection Grid -->
+        <div class="selection-grid">
+            <!-- CPU Selection -->
+            <div class="selection-card">
+                <div class="card-header">
+                    <div class="card-icon">🔷</div>
+                    <div class="card-title">CPU</div>
+                </div>
+                <div class="card-label">Select Processor</div>
+                <div class="custom-select" id="cpuSelect">
+                    <div class="select-button" onclick="toggleDropdown('cpuSelect')">
+                        <span id="cpuSelectedText">Choose a CPU</span>
+                        <span class="select-arrow">▼</span>
+                    </div>
+                    <div class="select-dropdown" id="cpuDropdown"></div>
+                </div>
+                <div class="selected-component" id="cpuDisplay"></div>
+            </div>
+
+            <!-- GPU Selection -->
+            <div class="selection-card">
+                <div class="card-header">
+                    <div class="card-icon">🎮</div>
+                    <div class="card-title">GPU</div>
+                </div>
+                <div class="card-label">Select Graphics Card</div>
+                <div class="custom-select" id="gpuSelect">
+                    <div class="select-button" onclick="toggleDropdown('gpuSelect')">
+                        <span id="gpuSelectedText">Choose a GPU</span>
+                        <span class="select-arrow">▼</span>
+                    </div>
+                    <div class="select-dropdown" id="gpuDropdown"></div>
+                </div>
+                <div class="selected-component" id="gpuDisplay"></div>
+            </div>
+
+            <!-- Motherboard Selection -->
+            <div class="selection-card">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">Motherboard</div>
+                </div>
+                <div class="card-label">Select Motherboard</div>
+                <div class="custom-select" id="moboSelect">
+                    <div class="select-button" onclick="toggleDropdown('moboSelect')">
+                        <span id="moboSelectedText">Choose a Motherboard</span>
+                        <span class="select-arrow">▼</span>
+                    </div>
+                    <div class="select-dropdown" id="moboDropdown"></div>
+                </div>
+                <div class="selected-component" id="moboDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Check Compatibility Button -->
+        <div class="action-buttons">
+            <button class="action-btn btn-primary" onclick="checkCompatibility()">
+                <span>🔍</span>
+                <span>Check Compatibility</span>
+            </button>
+            <button class="action-btn btn-secondary" onclick="resetSelection()">
+                <span>🔄</span>
+                <span>Reset</span>
+            </button>
+        </div>
+
+        <!-- Compatibility Results -->
+        <div class="compatibility-results" id="compatibilityResults"></div>
+    </div>
+
+        <script>
+        // Demo Component Data
+        const componentData = {
+            cpus: [
+                {
+                    id: 1,
+                    name: "AMD Ryzen 9 7950X",
+                    socket: "AM5",
+                    tdp: 170,
+                    pcie: "PCIe 5.0",
+                    icon: "🔷"
+                },
+                {
+                    id: 2,
+                    name: "Intel Core i9-14900K",
+                    socket: "LGA1700",
+                    tdp: 125,
+                    pcie: "PCIe 5.0",
+                    icon: "🔷"
+                },
+                {
+                    id: 3,
+                    name: "AMD Ryzen 7 7800X3D",
+                    socket: "AM5",
+                    tdp: 120,
+                    pcie: "PCIe 5.0",
+                    icon: "🔷"
+                }
+            ],
+            gpus: [
+                {
+                    id: 1,
+                    name: "NVIDIA RTX 4080 Super",
+                    tdp: 320,
+                    pcie: "PCIe 4.0 x16",
+                    slots: 3,
+                    icon: "🎮"
+                },
+                {
+                    id: 2,
+                    name: "AMD Radeon RX 7900 XTX",
+                    tdp: 355,
+                    pcie: "PCIe 4.0 x16",
+                    slots: 3,
+                    icon: "🎮"
+                },
+                {
+                    id: 3,
+                    name: "NVIDIA RTX 4070 Ti",
+                    tdp: 285,
+                    pcie: "PCIe 4.0 x16",
+                    slots: 2.5,
+                    icon: "🎮"
+                }
+            ],
+            motherboards: [
+                {
+                    id: 1,
+                    name: "ASUS ROG X670E",
+                    socket: "AM5",
+                    pcie: "PCIe 5.0",
+                    ramType: "DDR5",
+                    maxTDP: 230,
+                    icon: "⚡"
+                },
+                {
+                    id: 2,
+                    name: "MSI Z790 Gaming",
+                    socket: "LGA1700",
+                    pcie: "PCIe 5.0",
+                    ramType: "DDR5",
+                    maxTDP: 250,
+                    icon: "⚡"
+                },
+                {
+                    id: 3,
+                    name: "GIGABYTE B650 AORUS",
+                    socket: "AM5",
+                    pcie: "PCIe 4.0",
+                    ramType: "DDR5",
+                    maxTDP: 180,
+                    icon: "⚡"
+                }
+            ]
+        };
+
+        let selectedComponents = {
+            cpu: null,
+            gpu: null,
+            motherboard: null
+        };
+
+        // Initialize dropdowns
+        function initDropdowns() {
+            // CPUs
+            const cpuDropdown = document.getElementById('cpuDropdown');
+            cpuDropdown.innerHTML = componentData.cpus.map(cpu => `
+                <div class="select-option" onclick="selectComponent('cpu', ${cpu.id})">
+                    <div class="option-name">${cpu.name}</div>
+                    <div class="option-detail">Socket: ${cpu.socket} • TDP: ${cpu.tdp}W</div>
+                </div>
+            `).join('');
+
+            // GPUs
+            const gpuDropdown = document.getElementById('gpuDropdown');
+            gpuDropdown.innerHTML = componentData.gpus.map(gpu => `
+                <div class="select-option" onclick="selectComponent('gpu', ${gpu.id})">
+                    <div class="option-name">${gpu.name}</div>
+                    <div class="option-detail">TDP: ${gpu.tdp}W • ${gpu.pcie}</div>
+                </div>
+            `).join('');
+
+            // Motherboards
+            const moboDropdown = document.getElementById('moboDropdown');
+            moboDropdown.innerHTML = componentData.motherboards.map(mobo => `
+                <div class="select-option" onclick="selectComponent('motherboard', ${mobo.id})">
+                    <div class="option-name">${mobo.name}</div>
+                    <div class="option-detail">Socket: ${mobo.socket} • ${mobo.pcie}</div>
+                </div>
+            `).join('');
+        }
+
+        function toggleDropdown(selectId) {
+            const select = document.getElementById(selectId);
+            const allSelects = document.querySelectorAll('.custom-select');
+
+            allSelects.forEach(s => {
+                if (s.id !== selectId) {
+                    s.classList.remove('active');
+                }
+            });
+
+            select.classList.toggle('active');
+        }
+
+        function selectComponent(type, id) {
+            let component;
+            if (type === 'cpu') {
+                component = componentData.cpus.find(c => c.id === id);
+                document.getElementById('cpuSelectedText').textContent = component.name;
+                document.getElementById('cpuDisplay').innerHTML = `
+                    <div class="component-info">
+                        <div class="component-image">${component.icon}</div>
+                        <div class="component-details">
+                            <h4>${component.name}</h4>
+                            <div class="component-specs">
+                                <span>Socket: ${component.socket}</span>
+                                <span>TDP: ${component.tdp}W</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('cpuDisplay').classList.add('show');
+                document.getElementById('cpuSelect').classList.remove('active');
+            } else if (type === 'gpu') {
+                component = componentData.gpus.find(c => c.id === id);
+                document.getElementById('gpuSelectedText').textContent = component.name;
+                document.getElementById('gpuDisplay').innerHTML = `
+                    <div class="component-info">
+                        <div class="component-image">${component.icon}</div>
+                        <div class="component-details">
+                            <h4>${component.name}</h4>
+                            <div class="component-specs">
+                                <span>TDP: ${component.tdp}W</span>
+                                <span>${component.pcie}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('gpuDisplay').classList.add('show');
+                document.getElementById('gpuSelect').classList.remove('active');
+            } else if (type === 'motherboard') {
+                component = componentData.motherboards.find(c => c.id === id);
+                document.getElementById('moboSelectedText').textContent = component.name;
+                document.getElementById('moboDisplay').innerHTML = `
+                    <div class="component-info">
+                        <div class="component-image">${component.icon}</div>
+                        <div class="component-details">
+                            <h4>${component.name}</h4>
+                            <div class="component-specs">
+                                <span>Socket: ${component.socket}</span>
+                                <span>${component.pcie}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('moboDisplay').classList.add('show');
+                document.getElementById('moboSelect').classList.remove('active');
+            }
+
+            selectedComponents[type] = component;
+        }
+
+        function checkCompatibility() {
+            if (!selectedComponents.cpu || !selectedComponents.gpu || !selectedComponents.motherboard) {
+                alert('⚠️ Please select all components first!');
+                return;
+            }
+
+            const cpu = selectedComponents.cpu;
+            const gpu = selectedComponents.gpu;
+            const mobo = selectedComponents.motherboard;
+
+            // Check socket compatibility
+            const socketMatch = cpu.socket === mobo.socket;
+
+            // Check PCIe compatibility (assume backward compatible)
+            const pcieCompatible = true;
+
+            // Check CPU TDP vs motherboard capability
+            const tdpOk = cpu.tdp <= mobo.maxTDP;
+
+            // Power calculations
+            const totalPower = cpu.tdp + gpu.tdp + 100; // +100W for other parts
+            const recommendedPSU = Math.ceil((totalPower * 1.3) / 100) * 100; // 30% overhead
+            const powerUsagePercent = Math.min(100, Math.round((totalPower / recommendedPSU) * 100));
+
+            // Determine overall status
+            let overallStatus = 'compatible';
+            if (!socketMatch) overallStatus = 'incompatible';
+            else if (!tdpOk) overallStatus = 'warning';
+
+            // Render results
+            const resultsDiv = document.getElementById('compatibilityResults');
+            resultsDiv.innerHTML = `
+                <div class="results-header">
+                    <h2 class="results-title">Compatibility Analysis</h2>
+                    <div class="overall-status ${overallStatus}">
+                        <span>${overallStatus === 'compatible' ? '✅' : overallStatus === 'warning' ? '⚠️' : '❌'}</span>
+                        <span>
+                            ${overallStatus === 'compatible'
+                                ? 'Fully Compatible'
+                                : overallStatus === 'warning'
+                                    ? 'Compatible with Warnings'
+                                    : 'Not Compatible'}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="compatibility-checks">
+                    <div class="check-item ${socketMatch ? 'pass' : 'fail'}">
+                        <div class="check-icon">${socketMatch ? '✓' : '✕'}</div>
+                        <div class="check-content">
+                            <div class="check-title">Socket Compatibility</div>
+                            <div class="check-description">
+                                ${socketMatch 
+                                    ? `Perfect match! CPU socket <strong>${cpu.socket}</strong> is compatible with motherboard socket <strong>${mobo.socket}</strong>.`
+                                    : `❌ Mismatch! CPU requires <strong>${cpu.socket}</strong> but motherboard has <strong>${mobo.socket}</strong>.`}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="check-item ${pcieCompatible ? 'pass' : 'fail'}">
+                        <div class="check-icon">✓</div>
+                        <div class="check-content">
+                            <div class="check-title">PCIe Compatibility</div>
+                            <div class="check-description">
+                                GPU uses <strong>${gpu.pcie}</strong> and motherboard provides <strong>${mobo.pcie}</strong>. PCIe is backward compatible, so this will work.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="check-item ${tdpOk ? 'pass' : 'warning'}">
+                        <div class="check-icon">${tdpOk ? '✓' : '⚠️'}</div>
+                        <div class="check-content">
+                            <div class="check-title">CPU Power on Motherboard</div>
+                            <div class="check-description">
+                                ${tdpOk
+                                    ? `Motherboard supports CPUs up to <strong>${mobo.maxTDP}W</strong>. Your CPU is <strong>${cpu.tdp}W</strong>, which is within spec.`
+                                    : `CPU TDP is <strong>${cpu.tdp}W</strong> but motherboard is rated for <strong>${mobo.maxTDP}W</strong>. This may require a higher-end board or better VRM cooling.`}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="power-section">
+                    <div class="power-header">
+                        <div class="power-title">Power Requirements</div>
+                        <div class="power-value">${recommendedPSU}W PSU</div>
+                    </div>
+                    <div class="power-bar-container">
+                        <div class="power-bar-fill" style="width: ${powerUsagePercent}%;">
+                            ${powerUsagePercent}%
+                        </div>
+                    </div>
+                    <div class="power-recommendation">
+                        <span>💡</span>
+                        <span>
+                            Estimated system draw: <strong>${totalPower}W</strong>.
+                            We recommend at least a <strong>${recommendedPSU}W</strong> power supply
+                            for stable operation and future upgrades.
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            resultsDiv.classList.add('show');
+        }
+
+        function resetSelection() {
+            selectedComponents = {
+                cpu: null,
+                gpu: null,
+                motherboard: null
+            };
+
+            // Reset texts
+            document.getElementById('cpuSelectedText').textContent = 'Choose a CPU';
+            document.getElementById('gpuSelectedText').textContent = 'Choose a GPU';
+            document.getElementById('moboSelectedText').textContent = 'Choose a Motherboard';
+
+            // Hide selected displays
+            document.getElementById('cpuDisplay').classList.remove('show');
+            document.getElementById('gpuDisplay').classList.remove('show');
+            document.getElementById('moboDisplay').classList.remove('show');
+
+            // Clear results
+            const resultsDiv = document.getElementById('compatibilityResults');
+            resultsDiv.innerHTML = '';
+            resultsDiv.classList.remove('show');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.custom-select')) {
+                document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('active'));
+            }
+        });
+
+        // Initialize on load
+        initDropdowns();
+    </script>
+</body>
+</html>

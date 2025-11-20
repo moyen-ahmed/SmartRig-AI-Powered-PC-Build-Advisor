@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your AI-Generated Build - SmartRig</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00e5ff;
+            --neon-green: #00ff99;
+            --dark-bg: #0a0a0f;
+            --dark-card: #1a1a2e;
+            --dark-hover: #25253f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --glass-bg: rgba(26, 26, 46, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.primary {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            border: none;
+            color: var(--dark-bg);
+        }
+
+        /* Main Container */
+        .result-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Components Section */
+        .components-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Component Card */
+        .component-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .component-card:hover {
+            transform: translateX(10px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 15px 50px rgba(0, 229, 255, 0.2);
+        }
+
+        .component-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .component-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-label {
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--neon-green);
+        }
+
+        .card-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .component-image {
+            width: 200px;
+            height: 200px;
+            background: var(--dark-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(0, 229, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .component-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .component-card:hover .component-image img {
+            transform: scale(1.1);
+        }
+
+        .component-placeholder {
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+
+        .component-details {
+            flex: 1;
+        }
+
+        .component-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .component-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .spec-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .spec-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Performance Bar */
+        .perf-section {
+            margin-top: 1rem;
+        }
+
+        .perf-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .perf-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .perf-score {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+        }
+
+        .perf-bar {
+            height: 8px;
+            background: var(--dark-card);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .perf-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+            border-radius: 4px;
+            transition: width 1s ease-out;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Shop Links */
+        .shop-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .shop-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .shop-btn.primary {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            color: var(--dark-bg);
+        }
+
+        .shop-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--text-secondary);
+            color: var(--text-secondary);
+        }
+
+        .shop-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
+        }
+
+        /* AI Analysis Panel */
+        .ai-panel {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .ai-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .ai-icon {
+            font-size: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .ai-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Insight Boxes */
+        .insight-box {
+            background: var(--dark-card);
+            border-left: 4px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .insight-box:nth-child(even) {
+            border-left-color: var(--neon-green);
+        }
+
+        .insight-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Overall Score */
+        .overall-score {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(0, 255, 153, 0.1));
+            border: 2px solid var(--neon-cyan);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .score-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-value {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Performance Predictions */
+        .predictions {
+            margin-top: 2rem;
+        }
+
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--dark-card);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .prediction-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .prediction-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--neon-green);
+        }
+
+        /* Action Buttons */
+        .panel-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-button.regenerate {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            color: var(--dark-bg);
+        }
+
+        .action-button.save {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
+        }
+
+        /* Total Price Section */
+        .total-section {
+            grid-column: 1 / -1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .total-label {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .total-price {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .result-container {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-panel {
+                position: relative;
+                top: 0;
+            }
+
+            .card-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .component-image {
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .component-specs {
+                grid-template-columns: 1fr;
+            }
+
+            .shop-links {
+                flex-direction: column;
+            }
+
+            .nav-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <span class="logo-text">SmartRig</span>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-btn" onclick="regenerateBuild()">🔄 Regenerate</button>
+                <button class="nav-btn primary" onclick="saveBuild()">💾 Save Build</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="result-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Your <span class="gradient-text">AI-Generated Build</span></h1>
+            <p class="page-subtitle">Optimized for Gaming • Budget: $2,646 • Performance Score: 93/100</p>
+        </div>
+
+        <!-- Components Section -->
+        <div class="components-section" id="componentsSection"></div>
+
+        <!-- AI Analysis Panel -->
+        <div class="ai-panel">
+            <div class="ai-card">
+                <div class="ai-header">
+                    <span class="ai-icon">🧠</span>
+                    <h2 class="ai-title">AI Analysis</h2>
+                </div>
+
+                <div class="overall-score">
+                    <div class="score-icon">⭐</div>
+                    <div class="score-label">Overall Score</div>
+                    <div class="score-value">93/100</div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">CPU Choice</div>
+                    <div class="insight-text">AMD Ryzen 9 7950X selected for its exceptional multi-core performance, perfect for your workload.</div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">GPU Power</div>
+                    <div class="insight-text">RTX 4080 Super delivers 4K gaming at 120+ FPS with ray tracing enabled.</div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">Stability</div>
+                    <div class="insight-text">All components verified for compatibility. Power delivery exceeds requirements by 15%.</div>
+                </div>
+
+                <div class="predictions">
+                    <h3 style="margin-bottom: 1rem; color: var(--neon-cyan);">Performance Predictions</h3>
+                    <div class="prediction-item">
+                        <span class="prediction-label">1080p Ultra</span>
+                        <span class="prediction-value">240+ FPS</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span class="prediction-label">1440p Ultra</span>
+                        <span class="prediction-value">165+ FPS</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span class="prediction-label">4K High</span>
+                        <span class="prediction-value">120+ FPS</span>
+                    </div>
+                    <div class="prediction-item">
+                        <span class="prediction-label">Ray Tracing</span>
+                        <span class="prediction-value">✅ Excellent</span>
+                    </div>
+                </div>
+
+                <div class="panel-actions">
+                    <button class="action-button regenerate" onclick="regenerateBuild()">
+                        <span>🔄</span>
+                        <span>Regenerate Build</span>
+                    </button>
+                    <button class="action-button save" onclick="saveBuild()">
+                        <span>💾</span>
+                        <span>Save to Dashboard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Price -->
+        <div class="total-section">
+            <div class="total-label">Total Build Cost</div>
+            <div class="total-price" id="totalPrice">$2,646</div>
+        </div>
+    </div>
+
+    <script>
+        // Demo JSON Data
+        const buildData = {
+            components: [
+                {
+                    type: "CPU",
+                    name: "AMD Ryzen 9 7950X",
+                    price: 549,
+                    image: "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=400&h=400&fit=crop",
+                    specs: {
+                        cores: "16 Cores / 32 Threads",
+                        baseClock: "4.5 GHz",
+                        boostClock: "5.7 GHz",
+                        tdp: "170W"
+                    },
+                    performanceScore: 95,
+                    icon: "🔷"
+                },
+                {
+                    type: "GPU",
+                    name: "NVIDIA RTX 4080 Super",
+                    price: 999,
+                    image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=400&fit=crop",
+                    specs: {
+                        vram: "16GB GDDR6X",
+                        coreClock: "2.55 GHz",
+                        cudaCores: "10,240",
+                        tdp: "320W"
+                    },
+                    performanceScore: 92,
+                    icon: "🎮"
+                },
+                {
+                    type: "Motherboard",
+                    name: "ASUS ROG X670E",
+                    price: 399,
+                    image: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=400&h=400&fit=crop",
+                    specs: {
+                        socket: "AM5",
+                        chipset: "X670E",
+                        formFactor: "ATX",
+                        pcie: "PCIe 5.0"
+                    },
+                    performanceScore: 88,
+                    icon: "⚡"
+                },
+                {
+                    type: "RAM",
+                    name: "32GB DDR5 6000MHz",
+                    price: 179,
+                    image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=400&fit=crop",
+                    specs: {
+                        capacity: "32GB (2x16GB)",
+                        speed: "6000MHz",
+                        latency: "CL30",
+                        type: "DDR5"
+                    },
+                    performanceScore: 90,
+                    icon: "💾"
+                },
+                {
+                    type: "Storage",
+                    name: "Samsung 990 PRO 2TB",
+                    price: 189,
+                    image: "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=400&h=400&fit=crop",
+                    specs: {
+                        capacity: "2TB",
+                        interface: "NVMe Gen 4",
+                        read: "7,450 MB/s",
+                        write: "6,900 MB/s"
+                    },
+                    performanceScore: 94,
+                    icon: "💿"
+                },
+                {
+                    type: "PSU",
+                    name: "Corsair RM1000x 1000W",
+                    price: 189,
+                    image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400&h=400&fit=crop",
+                    specs: {
+                        wattage: "1000W",
+                        efficiency: "80+ Gold",
+                        modular: "Fully Modular",
+                        pfc: "Active PFC"
+                    },
+                    performanceScore: 87,
+                    icon: "⚡"
+                },
+                {
+                    type: "Cooler",
+                    name: "NZXT Kraken X73 360mm",
+                    price: 179,
+                    image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=400&h=400&fit=crop",
+                    specs: {
+                        type: "AIO Liquid",
+                        radiator: "360mm",
+                        fans: "3x 120mm RGB",
+                        noise: "21-38 dB"
+                    },
+                    performanceScore: 91,
+                    icon: "❄️"
+                },
+                {
+                    type: "Case",
+                    name: "Lian Li O11 Dynamic EVO",
+                    price: 169,
+                    image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400&h=400&fit=crop",
+                    specs: {
+                        formFactor: "Mid Tower",
+                        material: "Tempered Glass",
+                        fanSupport: "Up to 13 fans",
+                        radiator: "420mm Support"
+                    },
+                    performanceScore: 89,
+                    icon: "📦"
+                }
+            ]
+        };
+
+        // Render Components
+        function renderComponents() {
+            const container = document.getElementById('componentsSection');
+            let totalPrice = 0;
+
+            buildData.components.forEach((component, index) => {
+                totalPrice += component.price;
+                
+                const card = document.createElement('div');
+                card.className = 'component-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-label">${component.icon} ${component.type}</div>
+                        <div class="card-price">$${component.price}</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="component-image">
+                            <img src="${component.image}" alt="${component.name}" onerror="this.parentElement.innerHTML='<div class=\'component-placeholder\'>${component.icon}</div>'">
+                        </div>
+                        <div class="component-details">
+                            <h3 class="component-name">${component.name}</h3>
+                            <div class="component-specs">
+                                ${Object.entries(component.specs).map(([key, value]) => `
+                                    <div class="spec-item">
+                                        <div class="spec-label">${key}</div>
+                                        <div class="spec-value">${value}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="perf-section">
+                                <div class="perf-header">
+                                    <span class="perf-label">Performance Score</span>
+                                    <span class="perf-score">${component.performanceScore}/100</span>
+                                </div>
+                                <div class="perf-bar">
+                                    <div class="perf-fill" style="width: ${component.performanceScore}%"></div>
+                                </div>
+                            </div>
+                            <div class="shop-links">
+                                <button class="shop-btn primary" onclick="buyNow('${component.name}')">
+                                    <span>🛒</span>
+                                    <span>Buy Now</span>
+                                </button>
+                                <button class="shop-btn secondary" onclick="viewAlternatives('${component.type}')">
+                                    <span>🔄</span>
+                                    <span>Alternatives</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+
+            // Update total price
+            document.getElementById('totalPrice').textContent = `$${totalPrice.toLocaleString()}`;
+
+            // Animate performance bars
+            setTimeout(() => {
+                document.querySelectorAll('.perf-fill').forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 100);
+        }
+
+        // Functions
+        function regenerateBuild() {
+            alert('🔄 Regenerating build with different options...\n\nYou can choose:\n• Performance-focused\n• Budget-optimized\n• Silent build\n• Compact form factor');
+        }
+
+        function saveBuild() {
+            alert('💾 Build saved to your dashboard!\n\nYou can:\n• Access it anytime\n• Share with friends\n• Get price alerts\n• Track component availability');
+        }
+
+        function buyNow(componentName) {
+            alert(`🛒 Opening shopping links for:\n${componentName}\n\nAvailable at:\n• Amazon\n• Newegg\n• Best Buy`);
+        }
+
+        function viewAlternatives(componentType) {
+            alert(`🔄 Viewing alternatives for ${componentType}...\n\nShowing similar components with different:\n• Price points\n• Performance levels\n• Brand options`);
+        }
+
+        // Initialize
+        renderComponents();
+
+        // Add scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all component cards
+        setTimeout(() => {
+            document.querySelectorAll('.component-card').forEach(card => {
+                observer.observe(card);
+            });
+        }, 100);
+
+        // Add particle effect on hover
+        document.addEventListener('mousemove', (e) => {
+            if (e.target.closest('.component-card')) {
+                const card = e.target.closest('.component-card');
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
+            }
+        });
+
+        // Console branding
+        console.log('%c🚀 SmartRig AI PC Builder', 'color: #00e5ff; font-size: 24px; font-weight: bold;');
+        console.log('%cBuild Result Page Loaded', 'color: #00ff99; font-size: 16px;');
+        console.log(`%cTotal Components: ${buildData.components.length}`, 'color: #a0a0b8; font-size: 14px;');
+    </script>
+</body>
+</html>

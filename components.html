@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Explorer - SmartRig</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00e5ff;
+            --neon-green: #00ff99;
+            --dark-bg: #0a0a0f;
+            --dark-card: #1a1a2e;
+            --dark-hover: #25253f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --glass-bg: rgba(26, 26, 46, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        /* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;  /* logo --- links --- dashboard */
+    align-items: center;
+}
+
+:root {
+    --neon-cyan: #00e5ff;
+    --neon-green: #00ff99;
+}
+
+/* Logo container */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Icon wrapper */
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+/* SVG sizing */
+.logo-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* SmartRig text */
+.logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Float animation */
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--neon-cyan);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--neon-cyan);
+    transition: width 0.3s;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-cta {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+    border: none;
+    padding: 0.7rem 1.6rem;
+    border-radius: 8px;
+    color: var(--dark-bg);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 229, 255, 0.4);
+}
+
+
+        /* Main Container */
+        .explorer-container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Filters Sidebar */
+        .filters-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .filters-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .filter-checkbox:hover {
+            background: var(--dark-hover);
+        }
+
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--neon-cyan);
+            cursor: pointer;
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Price Range Slider */
+        .price-range {
+            margin: 1rem 0;
+        }
+
+        .price-display {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--dark-card);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .reset-filters {
+            width: 100%;
+            padding: 0.75rem;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 10px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .reset-filters:hover {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+        }
+
+        /* Components Grid */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Component Card */
+        .component-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .component-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 20px 60px rgba(0, 229, 255, 0.2);
+        }
+
+        .component-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
+            transition: transform 0.5s;
+        }
+
+        .component-card:hover::before {
+            transform: rotate(180deg);
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-type {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            color: var(--dark-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .card-favorite {
+            width: 40px;
+            height: 40px;
+            background: var(--dark-card);
+            border: 2px solid rgba(0, 229, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .card-favorite:hover {
+            background: var(--neon-cyan);
+            border-color: var(--neon-cyan);
+            transform: scale(1.1);
+        }
+
+        .card-favorite.active {
+            background: var(--neon-cyan);
+            color: var(--dark-bg);
+        }
+
+        /* Component Image */
+        .component-image {
+            width: 100%;
+            height: 200px;
+            background: var(--dark-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .component-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .component-card:hover .component-image img {
+            transform: scale(1.1);
+        }
+
+        .image-placeholder {
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+
+        /* Component Info */
+        .component-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .component-brand {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Specs Grid */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--dark-card);
+            border-radius: 12px;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .spec-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .spec-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Performance Score */
+        .perf-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .perf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .perf-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .perf-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+        }
+
+        .perf-bar {
+            height: 8px;
+            background: var(--dark-card);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .perf-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+            transition: width 1s ease-out;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Price & Actions */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .card-price {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            color: var(--dark-bg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
+        }
+
+        /* Compare Mode Panel */
+        .compare-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid var(--neon-cyan);
+            padding: 1.5rem 2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            z-index: 999;
+        }
+
+        .compare-panel.active {
+            transform: translateY(0);
+        }
+
+        .compare-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .compare-items {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .compare-item {
+            background: var(--dark-card);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .remove-compare {
+            background: none;
+            border: none;
+            color: var(--neon-cyan);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .compare-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            border: none;
+            border-radius: 10px;
+            color: var(--dark-bg);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .compare-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.5);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .component-card {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .explorer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .components-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+        <div class="logo-section">
+    <div class="logo-icon">
+        <svg viewBox="0 0 40 40" class="logo-svg">
+            <path d="M20 5 L35 12 L35 28 L20 35 L5 28 L5 12 Z"
+                  fill="none"
+                  stroke="url(#neonGradient)"
+                  stroke-width="2" />
+            <circle cx="20" cy="20" r="6" fill="url(#neonGradient)"/>
+            <defs>
+                <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#00e5ff"/>
+                    <stop offset="100%" style="stop-color:#00ff99"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+    <span class="logo-text">SmartRig</span>
+</div>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="components.html" class="nav-link active">Components</a>
+            <a href="compatibility.html" class="nav-link">Compatibility</a>
+        </div>
+
+        <button class="nav-cta">Dashboard</button>
+    </div>
+</nav>
+
+    <!-- Main Container -->
+    <div class="explorer-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title"><span class="gradient-text">Component</span> Explorer</h1>
+            <p class="page-subtitle">Browse 500+ PC components with detailed specs and real-time prices</p>
+        </div>
+
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar">
+            <div class="filters-card">
+                <div class="filter-section">
+                    <div class="filter-title">💰 Price Range</div>
+                    <div class="price-range">
+                        <div class="price-display">
+                            <span>$<span id="minPrice">0</span></span>
+                            <span>$<span id="maxPrice">2000</span></span>
+                        </div>
+                        <input type="range" class="range-slider" min="0" max="2000" value="2000" id="priceSlider">
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-title">🔷 Component Type</div>
+                    <div class="filter-group">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="CPU" checked>
+                            <span class="filter-label">CPU</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="GPU" checked>
+                            <span class="filter-label">GPU</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="Motherboard" checked>
+                            <span class="filter-label">Motherboard</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="RAM" checked>
+                            <span class="filter-label">RAM</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="Storage" checked>
+                            <span class="filter-label">Storage</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-title">🏢 Brand</div>
+                    <div class="filter-group">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="AMD">
+                            <span class="filter-label">AMD</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="Intel">
+                            <span class="filter-label">Intel</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="NVIDIA">
+                            <span class="filter-label">NVIDIA</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="ASUS">
+                            <span class="filter-label">ASUS</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="MSI">
+                            <span class="filter-label">MSI</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-title">⚡ Performance</div>
+                    <div class="filter-group">
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="high">
+                            <span class="filter-label">High (90+)</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="medium">
+                            <span class="filter-label">Medium (70-89)</span>
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" class="checkbox-input" value="entry">
+                            <span class="filter-label">Entry (&lt;70)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="reset-filters" onclick="resetFilters()">🔄 Reset Filters</button>
+            </div>
+        </aside>
+
+        <!-- Components Grid -->
+        <div class="components-grid" id="componentsGrid"></div>
+    </div>
+
+    <!-- Compare Panel -->
+    <div class="compare-panel" id="comparePanel">
+        <div class="compare-content">
+            <div class="compare-items" id="compareItems">
+                <span style="color: var(--text-secondary);">Select components to compare</span>
+            </div>
+            <button class="compare-btn" onclick="viewComparison()">Compare Now</button>
+        </div>
+    </div>
+
+    <script>
+        // Demo Component Data (Simulating MongoDB data)
+        const componentsData = [
+            {
+                id: 1,
+                type: "CPU",
+                name: "AMD Ryzen 9 7950X",
+                brand: "AMD",
+                price: 549,
+                image: "https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=400&h=400&fit=crop",
+                specs: {
+                    cores: "16C/32T",
+                    clock: "4.5-5.7 GHz",
+                    socket: "AM5",
+                    tdp: "170W"
+                },
+                performanceScore: 95,
+                details: {
+                    cache: "64MB L3",
+                    architecture: "Zen 4",
+                    process: "5nm",
+                    igpu: "Radeon Graphics"
+                }
+            },
+            {
+                id: 2,
+                type: "CPU",
+                name: "Intel Core i9-14900K",
+                brand: "Intel",
+                price: 589,
+                image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&h=400&fit=crop",
+                specs: {
+                    cores: "24C/32T",
+                    clock: "3.2-6.0 GHz",
+                    socket: "LGA1700",
+                    tdp: "125W"
+                },
+                performanceScore: 96,
+                details: {
+                    cache: "36MB",
+                    architecture: "Raptor Lake",
+                    process: "Intel 7",
+                    igpu: "UHD 770"
+                }
+            },
+            {
+                id: 3,
+                type: "GPU",
+                name: "NVIDIA RTX 4080 Super",
+                brand: "NVIDIA",
+                price: 999,
+                image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=400&fit=crop",
+                specs: {
+                    vram: "16GB GDDR6X",
+                    clock: "2.55 GHz",
+                    cuda: "10,240",
+                    tdp: "320W"
+                },
+                performanceScore: 92,
+                details: {
+                    busWidth: "256-bit",
+                    architecture: "Ada Lovelace",
+                    rtCores: "80",
+                    tensorCores: "320"
+                }
+            },
+            {
+                id: 4,
+                type: "GPU",
+                name: "AMD Radeon RX 7900 XTX",
+                brand: "AMD",
+                price: 899,
+                image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400&h=400&fit=crop",
+                specs: {
+                    vram: "24GB GDDR6",
+                    clock: "2.5 GHz",
+                    stream: "6,144",
+                    tdp: "355W"
+                },
+                performanceScore: 90,
+                details: {
+                    busWidth: "384-bit",
+                    architecture: "RDNA 3",
+                    infinity: "96MB",
+                    rayCores: "96"
+                }
+            },
+            {
+                id: 5,
+                type: "Motherboard",
+                name: "ASUS ROG X670E",
+                brand: "ASUS",
+                price: 399,
+                image: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=400&h=400&fit=crop",
+                specs: {
+                    socket: "AM5",
+                    chipset: "X670E",
+                    formFactor: "ATX",
+                    pcie: "PCIe 5.0"
+                },
+                performanceScore: 88,
+                details: {
+                    memorySlots: "4x DDR5",
+                    maxMemory: "128GB",
+                    m2Slots: "4x M.2",
+                    lan: "2.5Gb + WiFi 6E"
+                }
+            },
+            {
+                id: 6,
+                type: "Motherboard",
+                name: "MSI Z790 Gaming",
+                brand: "MSI",
+                price: 349,
+                image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=400&fit=crop",
+                specs: {
+                    socket: "LGA1700",
+                    chipset: "Z790",
+                    formFactor: "ATX",
+                    pcie: "PCIe 5.0"
+                },
+                performanceScore: 86,
+                details: {
+                    memorySlots: "4x DDR5",
+                    maxMemory: "128GB",
+                    m2Slots: "5x M.2",
+                    lan: "2.5Gb + WiFi 6E"
+                }
+            },
+            {
+                id: 7,
+                type: "RAM",
+                name: "G.SKILL Trident Z5 32GB",
+                brand: "G.SKILL",
+                price: 179,
+                image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=400&fit=crop",
+                specs: {
+                    capacity: "32GB (2x16)",
+                    speed: "6000MHz",
+                    latency: "CL30",
+                    type: "DDR5"
+                },
+                performanceScore: 90,
+                details: {
+                    voltage: "1.35V",
+                    timing: "30-38-38-96",
+                    rgb: "Yes",
+                    heatSink: "Aluminum"
+                }
+            },
+            {
+                id: 8,
+                type: "RAM",
+                name: "Corsair Vengeance 32GB",
+                brand: "Corsair",
+                price: 159,
+                image: "https://images.unsplash.com/photo-1562976540-1502c2145186?w=400&h=400&fit=crop",
+                specs: {
+                    capacity: "32GB (2x16)",
+                    speed: "5600MHz",
+                    latency: "CL36",
+                    type: "DDR5"
+                },
+                performanceScore: 87,
+                details: {
+                    voltage: "1.25V",
+                    timing: "36-36-36-76",
+                    rgb: "No",
+                    heatSink: "Aluminum"
+                }
+            },
+            {
+                id: 9,
+                type: "Storage",
+                name: "Samsung 990 PRO 2TB",
+                brand: "Samsung",
+                price: 189,
+                image: "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=400&h=400&fit=crop",
+                specs: {
+                    capacity: "2TB",
+                    interface: "NVMe Gen 4",
+                    read: "7,450 MB/s",
+                    write: "6,900 MB/s"
+                },
+                performanceScore: 94,
+                details: {
+                    formFactor: "M.2 2280",
+                    controller: "WD",
+                    nand: "TLC 3D",
+                    warranty: "5 Years"
+                }
+            }
+        ];
+
+        let compareList = [];
+
+        // Render Components
+        function renderComponents() {
+            const grid = document.getElementById('componentsGrid');
+            grid.innerHTML = '';
+
+            componentsData.forEach((component, index) => {
+                const card = document.createElement('div');
+                card.className = 'component-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-type">${component.type}</div>
+                        <div class="card-favorite" onclick="toggleFavorite(event, ${component.id})">
+                            <span>♡</span>
+                        </div>
+                    </div>
+                    <div class="component-image">
+                        <img src="${component.image}" alt="${component.name}" onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>🔷</div>'">
+                    </div>
+                    <div class="component-name">${component.name}</div>
+                    <div class="component-brand">Brand: ${component.brand}</div>
+                    <div class="specs-grid">
+                        ${Object.entries(component.specs).map(([key, value]) => `
+                            <div class="spec-item">
+                                <div class="spec-label">${key}</div>
+                                <div class="spec-value">${value}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="perf-section">
+                        <div class="perf-header">
+                            <span class="perf-label">Performance Score</span>
+                            <span class="perf-score">${component.performanceScore}/100</span>
+                        </div>
+                        <div class="perf-bar">
+                            <div class="perf-fill" style="width: ${component.performanceScore}%"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-price">${component.price}</div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-primary" onclick="addToBuild(${component.id})">
+                                <span>➕</span>
+                            </button>
+                            <button class="action-btn btn-secondary" onclick="addToCompare(${component.id})">
+                                <span>⚖️</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Price slider
+        const priceSlider = document.getElementById('priceSlider');
+        const maxPriceDisplay = document.getElementById('maxPrice');
+
+        priceSlider.addEventListener('input', function() {
+            maxPriceDisplay.textContent = this.value;
+        });
+
+        // Functions
+        function toggleFavorite(event, id) {
+            event.stopPropagation();
+            const btn = event.currentTarget;
+            btn.classList.toggle('active');
+            btn.querySelector('span').textContent = btn.classList.contains('active') ? '♥' : '♡';
+        }
+
+        function addToBuild(id) {
+            const component = componentsData.find(c => c.id === id);
+            alert(`✅ ${component.name} added to your build!`);
+        }
+
+        function addToCompare(id) {
+            const component = componentsData.find(c => c.id === id);
+            
+            if (compareList.includes(id)) {
+                alert('This component is already in comparison!');
+                return;
+            }
+
+            if (compareList.length >= 3) {
+                alert('You can compare maximum 3 components at once!');
+                return;
+            }
+
+            compareList.push(id);
+            updateComparePanel();
+        }
+
+        function updateComparePanel() {
+            const panel = document.getElementById('comparePanel');
+            const itemsContainer = document.getElementById('compareItems');
+
+            if (compareList.length === 0) {
+                panel.classList.remove('active');
+                itemsContainer.innerHTML = '<span style="color: var(--text-secondary);">Select components to compare</span>';
+                return;
+            }
+
+            panel.classList.add('active');
+            itemsContainer.innerHTML = compareList.map(id => {
+                const component = componentsData.find(c => c.id === id);
+                return `
+                    <div class="compare-item">
+                        <span>${component.name}</span>
+                        <button class="remove-compare" onclick="removeFromCompare(${id})">✕</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeFromCompare(id) {
+            compareList = compareList.filter(cId => cId !== id);
+            updateComparePanel();
+        }
+
+        function viewComparison() {
+            if (compareList.length < 2) {
+                alert('Please select at least 2 components to compare!');
+                return;
+            }
+            alert('📊 Opening comparison view...\n\nYou will see:\n• Side-by-side specs\n• Performance radar chart\n• Price comparison\n• Pros & cons');
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('.checkbox-input').forEach(cb => cb.checked = false);
+            priceSlider.value = 2000;
+            maxPriceDisplay.textContent = '2000';
+        }
+
+        // Initialize
+        renderComponents();
+
+        console.log('%c🚀 Component Explorer Loaded', 'color: #00e5ff; font-size: 20px; font-weight: bold;');
+        console.log(`%c${componentsData.length} components available`, 'color: #00ff99; font-size: 14px;');
+    </script>
+</body>
+</html>
